@@ -22,8 +22,8 @@
     "microbundle": "^0.4.4"
   },
   "peerDependencies": {
-    "react": "^15",
-    "react-dom": "^15"
+    "react": "^16 || ^15",
+    "react-dom": "^16|| ^15"
   },
   "dependencies": {
     "react-lifecycles-compat": "^3.0.4"
