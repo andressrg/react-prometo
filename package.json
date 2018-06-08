@@ -1,6 +1,6 @@
 {
   "name": "react-prometo",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Make it easier to use promises in react via render prop magic",
   "main": "dist/react-prometo.js",
   "umd:main": "dist/react-prometo.umd.js",
