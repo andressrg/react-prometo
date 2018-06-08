@@ -1,6 +1,7 @@
 import React from 'react';
+import { polyfill } from 'react-lifecycles-compat';
 
-export class Promiser extends React.Component {
+class PromiserBase extends React.Component {
   constructor(...args) {
     super(...args);
 
@@ -83,3 +84,5 @@ export class Promiser extends React.Component {
     });
   }
 }
+
+export const Promiser = polyfill(PromiserBase);
