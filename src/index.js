@@ -17,7 +17,7 @@ class PromiserBase extends React.Component {
   static getDerivedStateFromProps(props, state) {
     return {
       promise: props.promise,
-      isPending: props.promise !== state.promise
+      isPending: state.isPending || props.promise !== state.promise
     };
   }
 
