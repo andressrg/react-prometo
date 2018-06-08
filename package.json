@@ -1,0 +1,27 @@
+{
+  "name": "react-prometo",
+  "version": "0.0.0",
+  "description": "Make it easier to use promises in react via render prop magic",
+  "main": "dist/react-prometo.js",
+  "umd:main": "dist/react-prometo.umd.js",
+  "module": "dist/react-prometo.m.js",
+  "source": "src/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": "https://github.com/andressrg/react-prometo.git",
+  "author": "Andres Serrano <andres.srg@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch"
+  },
+  "devDependencies": {
+    "microbundle": "^0.4.4"
+  },
+  "peerDependencies": {
+    "react": "^16.3",
+    "react-dom": "^16.3"
+  }
+}
