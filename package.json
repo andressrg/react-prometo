@@ -25,7 +25,5 @@
   "peerDependencies": {
     "react": "^16 || ^15"
   },
-  "dependencies": {
-    "react-lifecycles-compat": "^3.0.4"
-  }
+  "dependencies": {}
 }

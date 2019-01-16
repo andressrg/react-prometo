@@ -1,7 +1,6 @@
 import React from 'react';
-import { polyfill } from 'react-lifecycles-compat';
 
-class PromiserBase extends React.Component {
+export class Promiser extends React.Component {
   constructor(...args) {
     super(...args);
 
@@ -47,7 +46,7 @@ class PromiserBase extends React.Component {
 
     promise.then(
       result => {
-        if (this.stop) return;
+        if (this.stop || promise !== this.props.promise) return;
 
         return this.props.onFulfilled != null
           ? Promise.resolve()
@@ -66,7 +65,7 @@ class PromiserBase extends React.Component {
             });
       },
       error => {
-        if (this.stop) return;
+        if (this.stop || promise !== this.props.promise) return;
 
         return this.setState({
           isPending: false,
@@ -85,5 +84,3 @@ class PromiserBase extends React.Component {
     });
   }
 }
-
-export const Promiser = polyfill(PromiserBase);
