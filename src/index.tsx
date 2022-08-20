@@ -9,7 +9,7 @@ export class Promiser extends React.Component {
       result: null,
       error: null,
 
-      promise: null
+      promise: null,
     };
   }
 
@@ -17,7 +17,7 @@ export class Promiser extends React.Component {
     if (props.promise === state.promise) return null;
     return {
       promise: props.promise,
-      isPending: true
+      isPending: true,
     };
   }
 
@@ -40,12 +40,12 @@ export class Promiser extends React.Component {
       return this.setState({
         isPending: false,
         result: null,
-        error: null
+        error: null,
       });
     }
 
     promise.then(
-      result => {
+      (result) => {
         if (this.stop || promise !== this.props.promise) return;
 
         return this.props.onFulfilled != null
@@ -55,22 +55,22 @@ export class Promiser extends React.Component {
                 this.setState({
                   isPending: false,
                   result,
-                  error: null
+                  error: null,
                 })
               )
           : this.setState({
               isPending: false,
               result,
-              error: null
+              error: null,
             });
       },
-      error => {
+      (error) => {
         if (this.stop || promise !== this.props.promise) return;
 
         return this.setState({
           isPending: false,
           result: null,
-          error
+          error,
         });
       }
     );
@@ -80,7 +80,7 @@ export class Promiser extends React.Component {
     return this.props.children({
       isPending: this.state.isPending,
       result: this.state.result || undefined,
-      error: this.state.error
+      error: this.state.error,
     });
   }
 }
