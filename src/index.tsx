@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useReducer, useEffect, useCallback, useMemo } from 'react';
 
 type State<T> = {
   isPending: boolean;
@@ -47,20 +47,21 @@ export type IPromiser<T> = State<T> & {
 };
 
 export function usePromise<T>(): IPromiser<T> {
-  const [state, dispatch] = React.useReducer<
-    (s: State<T>, a: Action<T>) => State<T>
-  >(usePromiseReducer, {
-    promise: null,
-    isPending: false,
-    result: undefined,
-    error: undefined,
-  });
+  const [state, dispatch] = useReducer<(s: State<T>, a: Action<T>) => State<T>>(
+    usePromiseReducer,
+    {
+      promise: null,
+      isPending: false,
+      result: undefined,
+      error: undefined,
+    }
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => dispatch({ type: 'set_promise', promise: null });
   }, [dispatch]);
 
-  const setPromise = React.useCallback(
+  const setPromise = useCallback(
     (promise: Promise<T> | null) => {
       dispatch({ type: 'set_promise', promise });
 
@@ -73,5 +74,5 @@ export function usePromise<T>(): IPromiser<T> {
     [dispatch]
   );
 
-  return { setPromise, ...state };
+  return useMemo(() => ({ setPromise, ...state }), [setPromise, state]);
 }
