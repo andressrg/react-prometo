@@ -1,11 +1,16 @@
 {
   "name": "react-prometo",
-  "version": "0.5.1",
-  "description": "Make it easier to use promises in react via render prop magic",
-  "main": "dist/react-prometo.js",
-  "umd:main": "dist/react-prometo.umd.js",
-  "module": "dist/react-prometo.m.js",
+  "version": "1.0.0",
+  "description": "Easier promises in react",
   "source": "src/index.js",
+  "type": "module",
+  "exports": {
+    "require": "./dist/react-prometo.cjs",
+    "default": "./dist/react-prometo.modern.js"
+  },
+  "main": "./dist/react-prometo.cjs",
+  "module": "./dist/react-prometo.module.js",
+  "unpkg": "./dist/react-prometo.umd.js",
   "files": [
     "dist",
     "src"
@@ -19,8 +24,8 @@
     "release": "git push && git push --tags && npm publish"
   },
   "devDependencies": {
-    "microbundle": "^0.9.0",
-    "react": "^16.4.1"
+    "microbundle": "^0.15.1",
+    "react": "18"
   },
   "peerDependencies": {
     "react": "^16 || ^15"
