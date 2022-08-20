@@ -1,86 +1,77 @@
-import React from 'react';
+import * as React from 'react';
 
-export class Promiser extends React.Component {
-  constructor(...args) {
-    super(...args);
+type State<T> = {
+  isPending: boolean;
+  promise: Promise<T> | null;
+  result?: T;
+  error?: Object;
+};
 
-    this.state = {
-      isPending: this.props.promise != null,
-      result: null,
-      error: null,
+type Action<T> = {
+  type: string;
+  promise: Promise<T> | null;
+  result?: T;
+  error?: Object;
+};
 
-      promise: null,
-    };
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    if (props.promise === state.promise) return null;
+function usePromiseReducer<T>(state: State<T>, action: Action<T>): State<T> {
+  if (action.type === 'set_promise') {
     return {
-      promise: props.promise,
-      isPending: true,
+      ...state,
+      promise: action.promise,
+      isPending: action.promise != null,
     };
+  } else if (action.type === 'resolve') {
+    if (action.promise !== state.promise) return state;
+    return {
+      ...state,
+      isPending: false,
+      result: action.result,
+      error: undefined,
+    };
+  } else if (action.type === 'reject') {
+    if (action.promise !== state.promise) return state;
+    return {
+      ...state,
+      isPending: false,
+      result: undefined,
+      error: action.error,
+    };
+  } else {
+    throw new Error();
   }
+}
 
-  componentDidMount() {
-    this.subscribeToPromise(this.props.promise);
-  }
+export type IPromiser<T> = State<T> & {
+  setPromise: (p: Promise<T> | null) => void;
+};
 
-  componentDidUpdate(prevProps) {
-    if (this.props.promise !== prevProps.promise) {
-      this.subscribeToPromise(this.props.promise);
-    }
-  }
+export function usePromise<T>(): IPromiser<T> {
+  const [state, dispatch] = React.useReducer<
+    (s: State<T>, a: Action<T>) => State<T>
+  >(usePromiseReducer, {
+    promise: null,
+    isPending: false,
+    result: undefined,
+    error: undefined,
+  });
 
-  componentWillUnmount() {
-    this.stop = true;
-  }
+  React.useEffect(() => {
+    return () => dispatch({ type: 'set_promise', promise: null });
+  }, [dispatch]);
 
-  subscribeToPromise(promise) {
-    if (promise == null) {
-      return this.setState({
-        isPending: false,
-        result: null,
-        error: null,
-      });
-    }
+  const setPromise = React.useCallback(
+    (promise: Promise<T> | null) => {
+      dispatch({ type: 'set_promise', promise });
 
-    promise.then(
-      (result) => {
-        if (this.stop || promise !== this.props.promise) return;
+      promise != null &&
+        promise.then(
+          (result) => dispatch({ type: 'resolve', promise, result }),
+          (error) => dispatch({ type: 'reject', promise, error })
+        );
+    },
+    [dispatch]
+  );
 
-        return this.props.onFulfilled != null
-          ? Promise.resolve()
-              .then(() => this.props.onFulfilled({ result }))
-              .then(() =>
-                this.setState({
-                  isPending: false,
-                  result,
-                  error: null,
-                })
-              )
-          : this.setState({
-              isPending: false,
-              result,
-              error: null,
-            });
-      },
-      (error) => {
-        if (this.stop || promise !== this.props.promise) return;
-
-        return this.setState({
-          isPending: false,
-          result: null,
-          error,
-        });
-      }
-    );
-  }
-
-  render() {
-    return this.props.children({
-      isPending: this.state.isPending,
-      result: this.state.result || undefined,
-      error: this.state.error,
-    });
-  }
+  return { setPromise, ...state };
 }
