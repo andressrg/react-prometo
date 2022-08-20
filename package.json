@@ -22,7 +22,8 @@
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch",
-    "release": "git push origin HEAD && git push --tags && npm publish"
+    "release": "git push origin HEAD && git push --tags && npm publish",
+    "release:beta": "git push origin HEAD && git push --tags && npm publish --tag beta"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
