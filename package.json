@@ -8,9 +8,9 @@
     "require": "./dist/react-prometo.cjs",
     "default": "./dist/react-prometo.modern.js"
   },
-  "main": "./dist/react-prometo.cjs",
-  "module": "./dist/react-prometo.module.js",
-  "unpkg": "./dist/react-prometo.umd.js",
+  "main": "dist/react-prometo.cjs",
+  "module": "dist/react-prometo.module.js",
+  "unpkg": "dist/react-prometo.umd.js",
   "types": "dist/react-prometo.d.ts",
   "files": [
     "dist",
