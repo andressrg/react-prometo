@@ -11,6 +11,7 @@
   "main": "./dist/react-prometo.cjs",
   "module": "./dist/react-prometo.module.js",
   "unpkg": "./dist/react-prometo.umd.js",
+  "types": "dist/react-prometo.d.ts",
   "files": [
     "dist",
     "src"
@@ -21,7 +22,7 @@
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch",
-    "release": "git push && git push --tags && npm publish"
+    "release": "git push origin HEAD && git push --tags && npm publish"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
