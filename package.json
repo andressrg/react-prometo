@@ -1,11 +1,17 @@
 {
   "name": "react-prometo",
-  "version": "0.5.1",
-  "description": "Make it easier to use promises in react via render prop magic",
-  "main": "dist/react-prometo.js",
-  "umd:main": "dist/react-prometo.umd.js",
-  "module": "dist/react-prometo.m.js",
-  "source": "src/index.js",
+  "version": "1.0.0-beta.5",
+  "description": "Easier promises in react",
+  "source": "src/index.tsx",
+  "type": "module",
+  "exports": {
+    "require": "./dist/react-prometo.cjs",
+    "default": "./dist/react-prometo.modern.js"
+  },
+  "main": "dist/react-prometo.cjs",
+  "module": "dist/react-prometo.module.js",
+  "unpkg": "dist/react-prometo.umd.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
@@ -16,14 +22,17 @@
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch",
-    "release": "git push && git push --tags && npm publish"
+    "release": "git push origin HEAD && git push --tags && npm publish",
+    "release:beta": "git push origin HEAD && git push --tags && npm publish --tag beta"
   },
   "devDependencies": {
-    "microbundle": "^0.9.0",
-    "react": "^16.4.1"
+    "@types/react": "^18.0.17",
+    "microbundle": "^0.15.1",
+    "react": "^18.2.0",
+    "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "react": "^16 || ^15"
+    "react": "^16 || ^17 || ^18"
   },
   "dependencies": {}
 }
